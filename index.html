@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>SA COD Converter</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <style>
+      * {
+        box-sizing: border-box;
+        font-family: "Segoe UI", Arial, sans-serif;
+      }
+
+      body {
+        margin: 0;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: linear-gradient(135deg, #0f172a, #1e293b, #020617);
+        color: white;
+      }
+
+      .card {
+        background: #0f172a;
+        padding: 40px;
+        border-radius: 16px;
+        width: 380px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+        text-align: center;
+      }
+
+      .title {
+        font-size: 28px;
+        font-weight: 700;
+        margin-bottom: 25px;
+      }
+
+      input {
+        width: 100%;
+        padding: 12px;
+        border-radius: 8px;
+        border: none;
+        background: #1e293b;
+        color: white;
+        font-size: 16px;
+        margin-top: 10px;
+      }
+
+      .results {
+        margin-top: 25px;
+        display: flex;
+        gap: 15px;
+      }
+
+      .box {
+        flex: 1;
+        background: #1e293b;
+        padding: 20px;
+        border-radius: 10px;
+      }
+
+      .small {
+        font-size: 14px;
+        opacity: 0.7;
+      }
+
+      .value {
+        font-size: 32px;
+        font-weight: 700;
+        margin-top: 5px;
+      }
+
+      .message {
+        margin-top: 20px;
+        color: #f87171;
+        font-size: 15px;
+      }
+
+      .footer {
+        margin-top: 25px;
+        font-size: 12px;
+        opacity: 0.6;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="card">
+      <div class="title">SA COD Converter</div>
+
+      <input type="date" id="checkoutDate" />
+
+      <div class="results">
+        <div class="box">
+          <div class="small">Days</div>
+          <div class="value" id="days">0</div>
+        </div>
+        <div class="box">
+          <div class="small">Hours</div>
+          <div class="value" id="hours">0</div>
+        </div>
+      </div>
+
+      <div class="message" id="message"></div>
+
+      <div class="footer">Created by CTC_Klay</div>
+    </div>
+
+    <script>
+      const dateInput = document.getElementById("checkoutDate");
+
+      dateInput.addEventListener("change", calculate);
+
+      function calculate() {
+        const input = dateInput.value;
+        if (!input) return;
+
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+
+        const checkout = new Date(input);
+        checkout.setHours(0, 0, 0, 0);
+
+        if (checkout < today) {
+          document.getElementById("message").innerText =
+            "Date has already passed";
+          document.getElementById("days").innerText = "0";
+          document.getElementById("hours").innerText = "0";
+          return;
+        }
+
+        document.getElementById("message").innerText = "";
+
+        const diff = checkout - today;
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = days * 24;
+
+        document.getElementById("days").innerText = days;
+        document.getElementById("hours").innerText = hours;
+      }
+    </script>
+  </body>
+</html>
